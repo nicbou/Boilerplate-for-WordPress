@@ -31,7 +31,7 @@
 					'echo'            => true,
 					'fallback_cb'     => 'wp_page_menu',
 					'show_home'		=> true,
-					'depth'           => 1 );
+					'depth'           => 0 );
 					wp_nav_menu( $args );
 				?>
 			</div>
