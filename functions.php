@@ -1,4 +1,32 @@
 <?php
+
+//== THEME OPTIONS ================================================================================
+	//These options are only there to make the developer's work easier. Setting any of these options
+	//to false will make the theme use the WordPress default behavior.
+
+	//Select the title suffix from an array to avoid exceeding the search engines' length limit. Implementation is in functions.php
+		define('WP_USE_DYNAMIC_SUFFIX',false);
+		
+		//Add your suffixes here
+			$available_suffixes = array( //Suffixes to use
+				'Short suffix',
+				'A longer suffix',
+				'A slightly longer suffix',
+				'A suffix for short page titles',
+				'A suffix for even shorter page titles',
+				'I doubt this suffix will even be used, given that it exceeds the title length displayed by search engines',
+			);
+		//Max title length (for the entire title)
+			$max_title_length = 65; //Max length displayed by most search engines
+			
+	//Select the description from the "description" custom field, the excerpt or the blog's description, in that order. Implementation is in functions.php
+		define('WP_USE_DYNAMIC_DESCRIPTION',false);	
+			
+	//Hide "Comments are disabled" when comments are disabled. Implementation is in comments.php
+		define('WP_HIDE_COMMENTS_DISABLED_MESSAGE',false);	
+		
+//=================================================================================================
+
 //Required by WordPress
 	add_theme_support( 'automatic-feed-links' );
 	
@@ -27,21 +55,6 @@
 	//This is a feature that improves SEO by selecting a title that is as long
 	//as possible, but that doesn't exceed the character limit displayed in search
 	//engines. If no short enough suffix is found, the default is used (blog title)
-	
-		//Set this to true to enable this feature
-			define('WP_USE_DYNAMIC_SUFFIX',false);
-			
-		//Add your suffixes here
-			$available_suffixes = array( //Suffixes to use
-				'Description test',
-				'Un suffixe plus long',
-				'Un suffixe qui s\'allonge',
-				'Plusieurs lettres de plus au suffixe',
-				'Un suffixe de plus en plus long, mais pas tant',
-			);
-		
-		//Set the max title length
-			$max_title_length = 65; //Max length for the <title> tag for search engines
 		
 		//Sort the array of suffixes by length
 			function sort_suffixes($a,$b){
@@ -72,10 +85,7 @@
 	//Output a custom description for the meta description tag
 	//If the user fills in the description post meta, then that will be used as the blog description.
 	//Otherwise, if there is an excerpt for the post, that will be used. Finally, if none of these are
-	//set, then the bloginfo description will be used. If disabled, the default behavior will be used.
-	
-		//Set this to true to enable this feature
-			define('WP_USE_DYNAMIC_DESCRIPTION',false);			
+	//set, then the bloginfo description will be used. If disabled, the default behavior will be used.		
 		function make_description(){
 		//Fill the description tags with a custom description, an excerpt or the blog description
 			$description = get_bloginfo('description');//Default value
