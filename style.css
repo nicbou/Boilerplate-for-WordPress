@@ -1,0 +1,38 @@
+/*
+Theme Name:boilerplate-barebones
+Theme URI:http://nicolasbouliane.com/
+Description: A theme boilerplate for WordPress
+Author:Nicolas Bouliane
+Version:1.0 
+*/
+body{width:100%;height:100%;padding:0;margin:0;font:14px/22px sans-serif}
+ul,ol,li{margin:0;padding:0;list-style:inside}
+
+#wrapper{}
+	#header{}
+		#banner{}
+		#nav{}
+	#content{}
+		.post{}
+			.title{}
+			.content{}
+				.content h1,h2,h3,h4,h5,h6{font-weight:400;padding:0;margin:0}
+				.content h1,.post .title{line-height:22px;margin:22px 0;font-size:24px;font-weight:700}
+				.content h2{line-height:22px;margin:22px 0;font-size:24px}
+				.content h3{line-height:22px;margin:0 0 22px;font-size:18px}
+				.content h4,dt{line-height:22px;margin:0;font-size:14px;text-transform:uppercase}
+				.content h5, h6, h7{line-height:22px;margin:0 0 22px;font-size:14px}
+				
+				.content p,.content pre,.content blockquote,.content address,.content ul,.content ol{font-size:14px;padding:0;margin:0 0 22px}
+					blockquote p, code p{margin:0!important}
+				.content img{margin-bottom:5px;margin-top:5px}
+					.wp-caption{background:#ddd;text-align:center}
+					
+				.alignleft{float:left}
+				.alignright{float:right}
+				.aligncenter{display:block;margin:0 auto}
+				
+				#comments{}					
+					.recentcomments a{display:inline !important;padding:0 !important;margin:0 !important;}	
+					#respond{}
+	#footer{}
