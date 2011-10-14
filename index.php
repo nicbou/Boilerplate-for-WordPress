@@ -3,6 +3,7 @@
 		<?php if ( have_posts() ) : while ( have_posts() ) : the_post(); //The Loop?>
 			<div <?php post_class()?>>
 				<h2 class="title"><a href="<?php the_permalink()?>" title="<?php the_title_attribute(); ?>" rel="bookmark"><?php the_title()?></a></h2>
+				<p><?php the_date()?></p>
 				<div class="content"><?php the_content()?></div>
 			</div>
 			<?php posts_nav_link() //Previous and Next page buttons?>

@@ -3,6 +3,7 @@
 		<?php if ( have_posts() ) : while ( have_posts() ) : the_post(); //The Loop?>
 		<div <?php post_class()?>>
 			<h1 class="title"><?php the_title()?></h1>
+			<p><?php the_date()?></p>
 			<div class="content"><?php the_content()?></div>
 			<?php the_tags( '<p id="tags">' . _e('Tags:','boilerplate-barebones') . ' ', ', ', '</p>');?>
 			<?php wp_link_pages() //Page buttons for multi-page posts?>
