@@ -25,6 +25,20 @@
 	//Hide "Comments are disabled" when comments are disabled. Implementation is in comments.php
 		define('WP_HIDE_COMMENTS_DISABLED_MESSAGE',false);	
 		
+	//Disable admin menus for non-admin users
+		define('WP_HIDE_MENU_POSTS',false);
+		define('WP_HIDE_MENU_PAGES',false);
+		define('WP_HIDE_MENU_COMMENTS',false);
+		define('WP_HIDE_MENU_MEDIA',false);
+		define('WP_HIDE_MENU_LINKS',false);
+		define('WP_HIDE_MENU_APPEARANCE',false);
+		define('WP_HIDE_MENU_PLUGINS',false);
+		define('WP_HIDE_MENU_USERS',false);
+		define('WP_HIDE_MENU_TOOLS',false);
+		define('WP_HIDE_MENU_SETTINGS',false);
+		
+		
+		
 //=================================================================================================
 
 //Required by WordPress
@@ -110,6 +124,32 @@
 
 	//Load the site's CSS in the editor
 		add_editor_style('style.css');
+		
+	//Hide specific admin menus from non-admin users (if activated)
+		if(!current_user_can('administrator')){ //Only hide menus for non-admins
+			function remove_menus () {
+				global $menu; //The WordPress admin menu. Contains a multi-dimensional array
+				$menus_to_hide = array(); //The array of menus to hide, really.
+				
+				if(WP_HIDE_MENU_POSTS) 		array_push($menus_to_hide,__('Posts'));
+				if(WP_HIDE_MENU_PAGES) 		array_push($menus_to_hide,__('Pages'));
+				if(WP_HIDE_MENU_COMMENTS) 	array_push($menus_to_hide,__('Comments'));
+				if(WP_HIDE_MENU_MEDIA) 		array_push($menus_to_hide,__('Media'));
+				if(WP_HIDE_MENU_LINKS) 		array_push($menus_to_hide,__('Links'));
+				if(WP_HIDE_MENU_APPEARANCE) array_push($menus_to_hide,__('Appearance'));
+				if(WP_HIDE_MENU_PLUGINS) 	array_push($menus_to_hide,__('Plugins'));
+				if(WP_HIDE_MENU_USERS) 		array_push($menus_to_hide,__('Users'));
+				if(WP_HIDE_MENU_TOOLS) 		array_push($menus_to_hide,__('Tools'));
+				if(WP_HIDE_MENU_SETTINGS) 	array_push($menus_to_hide,__('Settings'));
+				
+				end ($menu);
+				while (prev($menu)){
+					$value = explode(' ',$menu[key($menu)][0]);
+					if(in_array($value[0] != NULL?$value[0]:"" , $menus_to_hide)){unset($menu[key($menu)]);}
+				}
+			}
+			add_action('admin_menu', 'remove_menus');
+		}
 
 	
 //LOCALIZATION
