@@ -20,7 +20,10 @@
 			$max_title_length = 65; //Max length displayed by most search engines
 			
 	//Select the description from the "description" custom field, the excerpt or the blog's description, in that order. Implementation is in functions.php
-		define('WP_USE_DYNAMIC_DESCRIPTION',false);	
+		define('WP_USE_DYNAMIC_DESCRIPTION',false);
+		
+	//Use the "x days ago" or "x minutes ago" date format
+		define('WP_USE_TIME_AGO_DATES',false);
 			
 	//Hide "Comments are disabled" when comments are disabled. Implementation is in comments.php
 		define('WP_HIDE_COMMENTS_DISABLED_MESSAGE',false);	
@@ -37,7 +40,8 @@
 		define('WP_HIDE_MENU_TOOLS',false);
 		define('WP_HIDE_MENU_SETTINGS',false);
 		
-		
+	//Disable the admin bar
+		define('WP_HIDE_ADMIN_BAR',false);
 		
 //=================================================================================================
 
@@ -113,6 +117,14 @@
 			}			
 			echo $description;
 		}
+		
+	//Use the "x days ago" date format
+		if( WP_USE_TIME_AGO_DATES ){
+			function time_ago_date($date){
+				return sprintf( _x("Posted %s ago",'The %s parameter is a date like "5 days" or "3 minutes"','boilerplate-barebones'), human_time_diff(get_the_time('U'), current_time('timestamp')) );
+			}
+			add_filter('the_date','time_ago_date');
+		}
 
 	//Remove inline CSS placed by WordPress
 		function my_remove_recent_comments_style() {
@@ -150,7 +162,13 @@
 			}
 			add_action('admin_menu', 'remove_menus');
 		}
-
+		
+	//Disable the admin bar for logged in users
+		if(WP_HIDE_ADMIN_BAR){
+			wp_deregister_script('admin-bar');
+			wp_deregister_style('admin-bar');
+			remove_action('wp_footer','wp_admin_bar_render',1000);
+		}
 	
 //LOCALIZATION
 	
