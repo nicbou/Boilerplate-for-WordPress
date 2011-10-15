@@ -23,7 +23,7 @@
 		define('WP_USE_DYNAMIC_DESCRIPTION',false);
 		
 	//Use the "x days ago" or "x minutes ago" date format
-		define('WP_USE_TIME_AGO_DATES',false);
+		define('WP_USE_TIME_AGO_DATES',false); 
 			
 	//Hide "Comments are disabled" when comments are disabled. Implementation is in comments.php
 		define('WP_HIDE_COMMENTS_DISABLED_MESSAGE',false);	
