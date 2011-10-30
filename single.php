@@ -5,7 +5,7 @@
 			<h1 class="title"><?php the_title()?></h1>
 			<p><?php the_date()?></p>
 			<div class="content"><?php the_content()?></div>
-			<?php the_tags( '<p id="tags">' . _e('Tags:','boilerplate-barebones') . ' ', ', ', '</p>');?>
+			<?php the_tags( '<p id="tags">' . _e('Tags:',WP_THEME_SLUG) . ' ', ', ', '</p>');?>
 			<?php wp_link_pages() //Page buttons for multi-page posts?>
 		</div>
 		<?php comments_template()?>

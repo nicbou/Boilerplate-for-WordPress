@@ -40,9 +40,13 @@
 		define('WP_HIDE_MENU_TOOLS',false);
 		define('WP_HIDE_MENU_SETTINGS',false);
 		
-	//Disable the admin bar
+	//Disable the admin top bar on the site for connected users
 		define('WP_HIDE_ADMIN_BAR',false);
 		
+	//Set the theme's slug/textdomain (used in __() and _e() functions)
+		define('WP_THEME_SLUG','boilerplate-barebones');
+		
+
 //=================================================================================================
 
 //Required by WordPress
@@ -51,7 +55,7 @@
 	//MENU
 		//Register the main menu
 			if ( function_exists( 'register_nav_menu' ) ) {
-				register_nav_menu( 'main-menu', __('Main menu','boilerplate-barebones') );
+				register_nav_menu( 'main-menu', __('Main menu',WP_THEME_SLUG) );
 			}
 	
 	//SIDEBAR
@@ -121,7 +125,7 @@
 	//Use the "x days ago" date format
 		if( WP_USE_TIME_AGO_DATES ){
 			function time_ago_date($date){
-				return sprintf( _x("Posted %s ago",'The %s parameter is a date like "5 days" or "3 minutes"','boilerplate-barebones'), human_time_diff(get_the_time('U'), current_time('timestamp')) );
+				return sprintf( _x("Posted %s ago",'The %s parameter is a date like "5 days" or "3 minutes"',WP_THEME_SLUG), human_time_diff(get_the_time('U'), current_time('timestamp')) );
 			}
 			add_filter('the_date','time_ago_date');
 		}
@@ -173,5 +177,5 @@
 //LOCALIZATION
 	
 	//Enable localization
-		load_theme_textdomain('boilerplate-barebones',get_template_directory() . '/languages');
+		load_theme_textdomain(WP_THEME_SLUG,get_template_directory() . '/languages');
 ?>

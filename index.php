@@ -9,8 +9,8 @@
 			<?php posts_nav_link() //Previous and Next page buttons?>
 		<?php endwhile; else: //When there are no posts to list (do not confuse with 404.php)?>
 			<div class="post">
-				<h1 class="title"><?php _e('No posts found','boilerplate-barebones')?></h1>
-				<div class="content"><p><?php _e('There are no posts to display here.','boilerplate-barebones')?></p></div>
+				<h1 class="title"><?php _e('No posts found',WP_THEME_SLUG)?></h1>
+				<div class="content"><p><?php _e('There are no posts to display here.',WP_THEME_SLUG)?></p></div>
 			</div>
 		<?php endif; ?>
 	</div>

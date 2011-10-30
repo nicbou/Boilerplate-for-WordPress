@@ -4,7 +4,7 @@
 		die ('Eum.');
 
 	if ( post_password_required() ) { ?>
-		<p><?php _e("This post is password-protected.",'boilerplate-barebones')?></p>
+		<p><?php _e("This post is password-protected.",WP_THEME_SLUG)?></p>
 	<?php
 		return;
 	}
@@ -18,7 +18,7 @@
 		</ol>
 	 <?php else : // this is displayed if there are no comments so far ?>
 		<?php if (!comments_open() && !WP_HIDE_COMMENTS_DISABLED_MESSAGE) : ?>
-			<p><?php _e("Comments are disabled for this post.","boilerplate-barebones")?></p>
+			<p><?php _e("Comments are disabled for this post.",WP_THEME_SLUG)?></p>
 		<?php endif; ?>
 	<?php endif?>
 	<?php paginate_comments_links() ?>
