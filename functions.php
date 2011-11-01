@@ -1,48 +1,7 @@
 <?php
 
-//== THEME OPTIONS ================================================================================
-	//These options are only there to make the developer's work easier. Setting any of these options
-	//to false will make the theme use the WordPress default behavior.
+//== DEVELOPMENT OPTIONS ==========================================================================
 
-	//Select the title suffix from an array to avoid exceeding the search engines' length limit. Implementation is in functions.php
-		define('WP_USE_DYNAMIC_SUFFIX',false);
-		
-		//Add your suffixes here
-			$available_suffixes = array( //Suffixes to use
-				'Short suffix',
-				'A longer suffix',
-				'A slightly longer suffix',
-				'A suffix for short page titles',
-				'A suffix for even shorter page titles',
-				'I doubt this suffix will even be used, given that it exceeds the title length displayed by search engines',
-			);
-		//Max title length (for the entire title)
-			$max_title_length = 65; //Max length displayed by most search engines
-			
-	//Select the description from the "description" custom field, the excerpt or the blog's description, in that order. Implementation is in functions.php
-		define('WP_USE_DYNAMIC_DESCRIPTION',false);
-		
-	//Use the "x days ago" or "x minutes ago" date format
-		define('WP_USE_TIME_AGO_DATES',false);
-			
-	//Hide "Comments are disabled" when comments are disabled. Implementation is in comments.php
-		define('WP_HIDE_COMMENTS_DISABLED_MESSAGE',false);	
-		
-	//Disable admin menus for non-admin users
-		define('WP_HIDE_MENU_POSTS',false);
-		define('WP_HIDE_MENU_PAGES',false);
-		define('WP_HIDE_MENU_COMMENTS',false);
-		define('WP_HIDE_MENU_MEDIA',false);
-		define('WP_HIDE_MENU_LINKS',false);
-		define('WP_HIDE_MENU_APPEARANCE',false);
-		define('WP_HIDE_MENU_PLUGINS',false);
-		define('WP_HIDE_MENU_USERS',false);
-		define('WP_HIDE_MENU_TOOLS',false);
-		define('WP_HIDE_MENU_SETTINGS',false);
-		
-	//Disable the admin top bar on the site for connected users
-		define('WP_HIDE_ADMIN_BAR',false);
-		
 	//Set the theme's slug/textdomain (used in __() and _e() functions)
 		define('WP_THEME_SLUG','boilerplate-barebones');
 		
@@ -62,7 +21,7 @@
 		//Register the main sidebar
 			$args = array(
 				'name'          => 'Main sidebar',
-				'description'   => __('The main sidebar used across most pages'),
+				'description'   => __('The main sidebar used across most pages',WP_THEME_SLUG),
 				'before_widget' => '<li class="sidebaritem">',
 				'after_widget'  => '</li>',
 				'before_title'  => '<span class="title">',
@@ -82,26 +41,29 @@
 			function sort_suffixes($a,$b){
 				return strlen($b)-strlen($a);
 			}
-			usort($available_suffixes,'sort_suffixes');
 			
 		//Return the title_suffix
 			function make_title($separator = "|"){
-				global $available_suffixes, $max_title_length;
-				//Set the default suffix
-					$suffix = get_bloginfo('title');
+				$available_suffixes = get_option('boilerplate_dynamic_suffixes',array(get_bloginfo('description')));
+				$max_title_length = 65; //The maximum length of the title.
+				
+				usort($available_suffixes,'sort_suffixes');
+				
+				//Set the default suffix (the blog's name alone)
+					$suffix = ' ' . get_bloginfo('name');
 					
 				//If it's not the frontpage and this feature is enabled, find an appropriate suffix in the array
-					if(!is_front_page() && WP_USE_DYNAMIC_SUFFIX){
+					if(!is_front_page() && get_option('boilerplate_use_dynamic_suffix',false)){
 						foreach( $available_suffixes as $available_suffix ){
 							//If the length of this suffix + title is short enough, make it the final suffix
-							if ( strlen($available_suffix . wp_title(' ',false)) < $max_title_length ){
+							if ( strlen(utf8_decode((wp_title($separator,false,'right') . get_bloginfo('name') . ' | ' . $available_suffix))) <= $max_title_length ){
 								$suffix = $available_suffix;
 								break;//Keep the longest title only
 							}
 						}
 					}
 					
-				echo( wp_title($separator,false,'right') . $suffix );
+				echo( wp_title($separator,false,'right') . get_bloginfo('name') . ' | ' . $suffix );
 			}
 
 	//Output a custom description for the meta description tag
@@ -111,8 +73,8 @@
 		function make_description(){
 		//Fill the description tags with a custom description, an excerpt or the blog description
 			$description = get_bloginfo('description');//Default value
-			if ( WP_USE_DYNAMIC_DESCRIPTION ){
-				if( get_post_meta($post->ID,'description',true) != ''){
+			if ( get_option('boilerplate_use_dynamic_descriptions',false) ){
+				if( isset($post) && get_post_meta($post->ID,'description',true) != ''){
 					$description = get_post_meta($post->ID,'description',true);
 				}
 				elseif(is_single() && get_the_excerpt()!==''){
@@ -123,7 +85,7 @@
 		}
 		
 	//Use the "x days ago" date format
-		if( WP_USE_TIME_AGO_DATES ){
+		if( get_option('boilerplate_use_human_readable_dates',false) ){
 			function time_ago_date($date){
 				return sprintf( _x("Posted %s ago",'The %s parameter is a date like "5 days" or "3 minutes"',WP_THEME_SLUG), human_time_diff(get_the_time('U'), current_time('timestamp')) );
 			}
@@ -147,16 +109,13 @@
 				global $menu; //The WordPress admin menu. Contains a multi-dimensional array
 				$menus_to_hide = array(); //The array of menus to hide, really.
 				
-				if(WP_HIDE_MENU_POSTS) 		array_push($menus_to_hide,__('Posts'));
-				if(WP_HIDE_MENU_PAGES) 		array_push($menus_to_hide,__('Pages'));
-				if(WP_HIDE_MENU_COMMENTS) 	array_push($menus_to_hide,__('Comments'));
-				if(WP_HIDE_MENU_MEDIA) 		array_push($menus_to_hide,__('Media'));
-				if(WP_HIDE_MENU_LINKS) 		array_push($menus_to_hide,__('Links'));
-				if(WP_HIDE_MENU_APPEARANCE) array_push($menus_to_hide,__('Appearance'));
-				if(WP_HIDE_MENU_PLUGINS) 	array_push($menus_to_hide,__('Plugins'));
-				if(WP_HIDE_MENU_USERS) 		array_push($menus_to_hide,__('Users'));
-				if(WP_HIDE_MENU_TOOLS) 		array_push($menus_to_hide,__('Tools'));
-				if(WP_HIDE_MENU_SETTINGS) 	array_push($menus_to_hide,__('Settings'));
+				if(get_option('boilerplate_hide_posts_menu',false)) 		array_push($menus_to_hide,__('Posts'));
+				if(get_option('boilerplate_hide_pages_menu',false)) 		array_push($menus_to_hide,__('Pages'));
+				if(get_option('boilerplate_hide_comments_menu',false)) 		array_push($menus_to_hide,__('Comments'));
+				if(get_option('boilerplate_hide_media_menu',false)) 		array_push($menus_to_hide,__('Media'));
+				if(get_option('boilerplate_hide_links_menu',false)) 		array_push($menus_to_hide,__('Links'));
+				if(get_option('boilerplate_hide_profile_menu',false)) 		array_push($menus_to_hide,__('Profile'));
+				if(get_option('boilerplate_hide_tools_menu',false)) 		array_push($menus_to_hide,__('Tools'));
 				
 				end ($menu);
 				while (prev($menu)){
@@ -168,11 +127,312 @@
 		}
 		
 	//Disable the admin bar for logged in users
-		if(WP_HIDE_ADMIN_BAR){
-			wp_deregister_script('admin-bar');
-			wp_deregister_style('admin-bar');
-			remove_action('wp_footer','wp_admin_bar_render',1000);
+		if(get_option('boilerplate_hide_admin_bar',false)==true){
+			add_filter( 'show_admin_bar', '__return_false' ); 
 		}
+		
+	//Add the plugin options page
+		add_action('admin_menu', 'boilerplate_barebones_menu');
+		function boilerplate_barebones_menu() {
+			add_theme_page('Theme options', 'Theme options', 'manage_options', WP_THEME_SLUG, 'boilerplate_theme_options');
+		}
+		function boilerplate_theme_options() {			
+			if (!current_user_can('manage_options'))  {
+				wp_die( __('You do not have sufficient permissions to access this page.') );
+			}
+			
+			//If POST data was submitted, begin saving the options
+				if ( isset($_POST['saved']) ){
+					//Echo a confirmation message
+						echo('<div class="updated"><p><strong>'. __('Your theme settings were saved.', WP_THEME_SLUG ) .'</strong></p></div>');
+					
+					//Save the theme options
+						//Dynamic title suffixes
+							if ( isset($_POST['boilerplate_use_dynamic_suffix'] ))
+								update_option('boilerplate_use_dynamic_suffix',true);
+							else
+								update_option('boilerplate_use_dynamic_suffix',false);
+							
+						//The suffixes to use
+							if ( isset($_POST['boilerplate_dynamic_suffixes'] ))
+								update_option('boilerplate_dynamic_suffixes',explode("\n", $_POST['boilerplate_dynamic_suffixes'])); //Split the suffixes by line
+						
+						//Dynamic descriptions
+							if ( isset($_POST['boilerplate_use_dynamic_descriptions'] ))
+								update_option('boilerplate_use_dynamic_descriptions',true);
+							else
+								update_option('boilerplate_use_dynamic_descriptions',false);
+							
+						//Human-readable dates
+							if ( isset($_POST['boilerplate_use_human_readable_dates'] ))
+								update_option('boilerplate_use_human_readable_dates',true);
+							else
+								update_option('boilerplate_use_human_readable_dates',false);
+								
+						//Hide menus
+							if ( isset($_POST['boilerplate_hide_admin_bar'] ))
+								update_option('boilerplate_hide_admin_bar',true);
+							else
+								update_option('boilerplate_hide_admin_bar',false);
+
+							if ( isset($_POST['boilerplate_hide_posts_menu'] ))
+								update_option('boilerplate_hide_posts_menu',true);
+							else
+								update_option('boilerplate_hide_posts_menu',false);
+								
+							if ( isset($_POST['boilerplate_hide_pages_menu'] ))
+								update_option('boilerplate_hide_pages_menu',true);
+							else
+								update_option('boilerplate_hide_pages_menu',false);
+								
+							if ( isset($_POST['boilerplate_hide_media_menu'] ))
+								update_option('boilerplate_hide_media_menu',true);
+							else
+								update_option('boilerplate_hide_media_menu',false);
+								
+							if ( isset($_POST['boilerplate_hide_links_menu'] ))
+								update_option('boilerplate_hide_links_menu',true);
+							else
+								update_option('boilerplate_hide_links_menu',false);
+								
+							if ( isset($_POST['boilerplate_hide_comments_menu'] ))
+								update_option('boilerplate_hide_comments_menu',true);
+							else
+								update_option('boilerplate_hide_comments_menu',false);
+								
+							if ( isset($_POST['boilerplate_hide_profile_menu'] ))
+								update_option('boilerplate_hide_profile_menu',true);
+							else
+								update_option('boilerplate_hide_profile_menu',false);
+								
+							if ( isset($_POST['boilerplate_hide_tools_menu'] ))
+								update_option('boilerplate_hide_tools_menu',true);
+							else
+								update_option('boilerplate_hide_tools_menu',false);
+
+							if ( isset($_POST['boilerplate_hide_comments_disabled'] ))
+								update_option('boilerplate_hide_comments_disabled',true);
+							else
+								update_option('boilerplate_hide_comments_disabled',false);								
+				}
+
+			//Display the theme options
+				echo('
+					<div class="wrap">
+						<div id="icon-themes" class="icon32"><br/></div><h2>'. __('Theme options',WP_THEME_SLUG) .'</h2>
+						<form name="form1" method="post" action="">
+							<table class="form-table">
+								<tbody>
+									<p>
+										'.__(
+											'Use this page to customize this theme. If you want to use WordPress\' default behavior, leave the boxes unchecked.',
+											WP_THEME_SLUG
+										).'
+									</p>								
+									<tr valign="top">
+										<td colspan="2">
+											<h3>'.__('Dynamic title suffixes',WP_THEME_SLUG).'</h3>
+											<p>
+												'.__(
+													'By default, Wordpress page titles are set to <code>Blog name » Title</code>.
+													For search engines to find you, you should use a more descriptive title such
+													as <code>Title | Blog name | Title suffix</code>. The suffix appended to your
+													post titles should describe the purpose of your website.',
+													WP_THEME_SLUG
+												).'
+											</p>
+											<p>
+												'.__(
+													'However, only the first ~65 characters of your title are displayed in Google results, so it\'s possible
+													that your title, blog name and suffix combined exceed that on some pages with longer titles.
+													The solution is to have a list of different lenght suffixes that can be	used depending on the
+													length of your page title.',
+													WP_THEME_SLUG
+												).'
+											</p>
+											<p>
+												'.__(
+													'When you enable this option, the longest suffix that doesn\'t make your title exceed 65 characters
+													will be selected. For example, the <code>Home</code> page can have a very long suffix, while the <code>How to fly a
+													plane in 30 easy steps</code> will need a shorter suffix, as to keep the title length under 65
+													characters.',
+													WP_THEME_SLUG
+												).'
+											</p>
+											<p>
+												'.__(
+													'Here are a few suffix examples: <code>Web design and development in Granby, Québec</code>,
+													<code>Web design in Granby, Québec</code>, <code>Web design services</code> and <code>Web design</code>.
+													The theme will pick the best suffix for the title length.',
+													WP_THEME_SLUG
+												).'
+											</p>
+										</td>
+									</tr>
+									<tr valign="top">
+										<th scope="row">
+											<label for="chk_dynamic_suffix">'.__("Use dynamic title suffixes", WP_THEME_SLUG ).'</label>
+										</th>
+										<td>
+											<input type="checkbox" id="chk_dynamic_suffix" name="boilerplate_use_dynamic_suffix"
+												onclick="document.getElementById(\'txt_dynamic_suffix\').disabled = !this.checked" '. (get_option('boilerplate_use_dynamic_suffix',false)==true?'checked':'') .'/>
+										</td>
+									</tr>
+									<tr valign="top">
+										<th scope="row" colspan=2>
+											<label for="txt_dynamic_suffix">Available title suffixes:</label>
+											<textarea cols="60" rows="6"
+												id="txt_dynamic_suffix" class="large-text code" name="boilerplate_dynamic_suffixes"
+												'.(get_option('boilerplate_use_dynamic_suffix',false)==true?'':'disabled').'>'. implode("\n",get_option('boilerplate_dynamic_suffixes',array('cat','dog'))) .'</textarea>
+										</th>
+									</tr>
+									
+									<tr valign="top">
+										<td colspan="2">
+											<h3>'.__('Dynamic meta description',WP_THEME_SLUG).'</h3>
+											<p>
+												'.__(
+													'If enabled, the meta description tag will be the post/page description, the excerpt or the blog description, in that order.',
+													WP_THEME_SLUG
+												).'
+											</p>
+										</td>
+									</tr>
+									<tr valign="top">
+										<th scope="row">
+											<label for="chk_dynamic_descriptions">'.__("Use dynamic meta descriptions", WP_THEME_SLUG ).'</label>
+										</th>
+										<td>
+											<input type="checkbox" id="chk_dynamic_descriptions" name="boilerplate_use_dynamic_descriptions" '. (get_option('boilerplate_use_dynamic_descriptions',false)==true?'checked':'') .'/>
+										</td>
+									</tr>
+									
+									<tr valign="top">
+										<td colspan="2">
+											<h3>'.__('Human-readable dates',WP_THEME_SLUG).'</h3>
+											<p>
+												'.__(
+													'If enabled, the date will be displayed as <code>25 days ago</code>.',
+													WP_THEME_SLUG
+												).'
+											</p>
+										</td>
+									</tr>
+									<tr valign="top">
+										<th scope="row">
+											<label for="chk_human_dates">'.__("Use human-readable dates", WP_THEME_SLUG ).'</label>
+										</th>
+										<td>
+											<input type="checkbox" id="chk_human_dates" name="boilerplate_use_human_readable_dates" '. (get_option('boilerplate_use_human_readable_dates',false)==true?'checked':'') .'/>
+										</td>
+									</tr>
+									
+									<tr valign="top">
+										<td colspan="2">
+											<h3>'.__('User menus',WP_THEME_SLUG).'</h3>
+											<p>
+												'.__(
+													'You can disable Admin area menus for users that don\'t have administrator privileges to ensure your clients a more streamlined experience.',
+													WP_THEME_SLUG
+												).'
+											</p>
+										</td>
+									</tr>
+									<tr valign="top">
+										<th scope="row">
+											<label for="chk_hide_top_bar">'.__("Hide the admin top bar on the site", WP_THEME_SLUG ).'</label>
+										</th>
+										<td>
+											<input type="checkbox" id="chk_hide_top_bar" name="boilerplate_hide_admin_bar" '. (get_option('boilerplate_hide_admin_bar',false)==true?'checked':'') .'/>
+										</td>
+									</tr>
+									<tr valign="top">
+										<th scope="row">
+											<label for="chk_hide_posts_menu">'.__("Hide Posts menu", WP_THEME_SLUG ).'</label>
+										</th>
+										<td>
+											<input type="checkbox" id="chk_hide_posts_menu" name="boilerplate_hide_posts_menu" '. (get_option('boilerplate_hide_posts_menu',false)==true?'checked':'') .'/>
+										</td>
+									</tr>
+									<tr valign="top">
+										<th scope="row">
+											<label for="chk_hide_pages_menu">'.__("Hide Pages menu", WP_THEME_SLUG ).'</label>
+										</th>
+										<td>
+											<input type="checkbox" id="chk_hide_pages_menu" name="boilerplate_hide_pages_menu" '. (get_option('boilerplate_hide_pages_menu',false)==true?'checked':'') .'/>
+										</td>
+									</tr>
+									<tr valign="top">
+										<th scope="row">
+											<label for="chk_hide_comments_menu">'.__("Hide Comments menu", WP_THEME_SLUG ).'</label>
+										</th>
+										<td>
+											<input type="checkbox" id="chk_hide_comments_menu" name="boilerplate_hide_comments_menu" '. (get_option('boilerplate_hide_comments_menu',false)==true?'checked':'') .'/>
+										</td>
+									</tr>
+									<tr valign="top">
+										<th scope="row">
+											<label for="chk_hide_media_menu">'.__("Hide Media menu", WP_THEME_SLUG ).'</label>
+										</th>
+										<td>
+											<input type="checkbox" id="chk_hide_media_menu" name="boilerplate_hide_media_menu" '. (get_option('boilerplate_hide_media_menu',false)==true?'checked':'') .'/>
+										</td>
+									</tr>
+									<tr valign="top">
+										<th scope="row">
+											<label for="chk_hide_links_menu">'.__("Hide Links menu", WP_THEME_SLUG ).'</label>
+										</th>
+										<td>
+											<input type="checkbox" id="chk_hide_links_menu" name="boilerplate_hide_links_menu" '. (get_option('boilerplate_hide_links_menu',false)==true?'checked':'') .'/>
+										</td>
+									</tr>
+									<tr valign="top">
+										<th scope="row">
+											<label for="chk_hide_profile_menu">'.__("Hide Profile menu", WP_THEME_SLUG ).'</label>
+										</th>
+										<td>
+											<input type="checkbox" id="chk_hide_profile_menu" name="boilerplate_hide_profile_menu" '. (get_option('boilerplate_hide_profile_menu',false)==true?'checked':'') .'/>
+										</td>
+									</tr>
+									<tr valign="top">
+										<th scope="row">
+											<label for="chk_hide_tools_menu">'.__("Hide Tools menu", WP_THEME_SLUG ).'</label>
+										</th>
+										<td>
+											<input type="checkbox" id="chk_hide_tools_menu" name="boilerplate_hide_tools_menu" '. (get_option('boilerplate_hide_tools_menu',false)==true?'checked':'') .'/>
+										</td>
+									</tr>
+									
+									<tr valign="top">
+										<td colspan="2">
+											<h3>'.__('"Comments disabled" message',WP_THEME_SLUG).'</h3>
+											<p>
+												'.__(
+													'You can hide the "Comments are disabled for this post" message at the bottom of posts by checking this option.',
+													WP_THEME_SLUG
+												).'
+											</p>
+										</td>
+									</tr>
+									<tr valign="top">
+										<th scope="row">
+											<label for="chk_hide_comments_disabled">'.__("Hide the \"Comments disabled\" message", WP_THEME_SLUG ).'</label>
+										</th>
+										<td>
+											<input type="checkbox" id="chk_hide_comments_disabled" name="boilerplate_hide_comments_disabled" '. (get_option('boilerplate_hide_comments_disabled',false)==true?'checked':'') .'/>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+							<p class="submit">
+								<input type="hidden" name="saved" />
+								<input type="submit" name="Submit" class="button-primary" value="'.esc_attr__("Save Changes").'" />
+							</p>
+						</form>
+					</div>
+				');
+		}
+
 	
 //LOCALIZATION
 	

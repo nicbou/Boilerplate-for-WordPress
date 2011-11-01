@@ -17,7 +17,7 @@
 			<?php wp_list_comments()?>
 		</ol>
 	 <?php else : // this is displayed if there are no comments so far ?>
-		<?php if (!comments_open() && !WP_HIDE_COMMENTS_DISABLED_MESSAGE) : ?>
+		<?php if (!comments_open() && !get_option('boilerplate_hide_comments_disabled',false)) : ?>
 			<p><?php _e("Comments are disabled for this post.",WP_THEME_SLUG)?></p>
 		<?php endif; ?>
 	<?php endif?>
