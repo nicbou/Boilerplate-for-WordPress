@@ -103,6 +103,27 @@
 	//Load the site's CSS in the editor
 		add_editor_style('style.css');
 		
+	//Use a custom logo on the login page
+		function change_login_logo() {
+			//Adjust the logo to the image size
+				$size = getimagesize ( get_option('boilerplate_custom_logo_url','') );
+			//Echo the changes to the CSS
+				echo '
+				<style type="text/css">
+					h1,#login{
+						width:' . $size[0] . 'px;
+					}
+					h1 a {
+						background-image: url(' . get_option('boilerplate_custom_logo_url','') . ');
+						width:' . $size[0] . 'px;
+						height:' . $size[1] . 'px;
+					}
+				</style>';
+		}
+		if (get_option('boilerplate_custom_logo_url','')!=''){
+			add_action('login_head', 'change_login_logo');
+		}
+
 	//Hide specific admin menus from non-admin users (if activated)
 		if(!current_user_can('administrator')){ //Only hide menus for non-admins
 			function remove_menus () {
@@ -146,4 +167,13 @@
 	
 	//Enable localization
 		load_theme_textdomain(WP_THEME_SLUG,get_template_directory() . '/languages');
+		
+		
+//UTILITY
+	
+	//URL validator
+		function is_valid_url($URL) {
+			$v = "/^(http|https|ftp):\/\/([A-Z0-9][A-Z0-9_-]*(?:\.[A-Z0-9][A-Z0-9_-]*)+):?(\d+)?\/?/i";
+			return (bool)preg_match($v, $URL);
+		}
 ?>

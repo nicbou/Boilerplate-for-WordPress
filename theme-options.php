@@ -83,7 +83,15 @@
 					if ( isset($_POST['boilerplate_hide_comments_disabled'] ))
 						update_option('boilerplate_hide_comments_disabled',true);
 					else
-						update_option('boilerplate_hide_comments_disabled',false);								
+						update_option('boilerplate_hide_comments_disabled',false);	
+
+					if ( isset($_POST['boilerplate_custom_logo_url'] ) )
+						if ( is_valid_url($_POST['boilerplate_custom_logo_url']) )
+							update_option('boilerplate_custom_logo_url',$_POST['boilerplate_custom_logo_url']);
+						else
+							echo('<div class="error"><p><strong>'. __('The logo URL is invalid. Other settings were saved.', WP_THEME_SLUG ) .'</strong></p></div>');
+					else
+						update_option('boilerplate_custom_logo_url','');
 			}
 	}
 ?>
@@ -152,7 +160,7 @@
 						<label for="txt_dynamic_suffix">Available title suffixes:</label>
 						<textarea cols="60" rows="6"
 							id="txt_dynamic_suffix" class="large-text code" name="boilerplate_dynamic_suffixes"
-							<?php(get_option('boilerplate_use_dynamic_suffix',false)==true?'':'disabled')?><?php implode("\n",get_option('boilerplate_dynamic_suffixes',array('cat','dog')))?></textarea>
+							<?php(get_option('boilerplate_use_dynamic_suffix',false)==true?'':'disabled')?><?php echo(implode("\n",get_option('boilerplate_dynamic_suffixes',array(''))))?></textarea>
 					</th>
 				</tr>
 				
@@ -269,6 +277,25 @@
 					</th>
 					<td>
 						<input type="checkbox" id="chk_hide_tools_menu" name="boilerplate_hide_tools_menu" <?php echo(get_option('boilerplate_hide_tools_menu',false)==true?'checked':'')?>/>
+					</td>
+				</tr>
+				<tr valign="top">
+					<td colspan="2">
+						<h3><?php _e('Custom login image',WP_THEME_SLUG)?></h3>
+						<p>
+							<?php _e(
+								'You can use your own logo for the WordPress login screen by entering a URL below. Please use transparent images that are 250-500px wide.',
+								WP_THEME_SLUG
+							)?>
+						</p>
+					</td>
+				</tr>
+				<tr valign="top">
+					<th scope="row">
+						<label for="txt_logo_url"><?php _e("Logo URL (leave empty to disable)", WP_THEME_SLUG )?></label>
+					</th>
+					<td>
+						<input type="text" id="txt_logo_url" name="boilerplate_custom_logo_url" class="regular-text code" value="<?php echo(get_option('boilerplate_custom_logo_url',''))?>"/>
 					</td>
 				</tr>
 				
