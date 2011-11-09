@@ -4,6 +4,9 @@ Theme URI:http://nicolasbouliane.com/
 Description: A theme boilerplate for WordPress
 Author:Nicolas Bouliane
 Version:1.0 
+Tags: White, light, custom-menu, editor-style, microformats, theme-options, translation-ready
+License: GNU General Public License v2.0
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 This file is minimized and compressed before output.
 */
@@ -16,6 +19,7 @@ ul,ol,li{margin:0;padding:0;list-style:inside}
 		#nav{}
 	#content{}
 		.post{}
+			.post.sticky{}
 			.title{}
 			.content{}
 				.content h1,h2,h3,h4,h5,h6{font-weight:400;padding:0;margin:0}
@@ -27,19 +31,31 @@ ul,ol,li{margin:0;padding:0;list-style:inside}
 				
 				.content p,.content pre,.content blockquote,.content address,.content ul,.content ol{font-size:14px;padding:0;margin:0 0 22px}
 					blockquote p, code p{margin:0!important}
-				.content img{margin-bottom:5px;margin-top:5px}
-					.wp-caption{background:#ddd;text-align:center}
 					
+				.gallery-caption{}
+				.content img{margin-bottom:5px;margin-top:5px}
+					.wp-caption{background:#ddd}
+						.wp-caption img{}
+						.wp-caption p.wp-caption-text{}
+						.wp-caption.alignleft{}
+						.wp-caption.alignright{}
+						.wp-caption.aligncenter{}
+					a img.alignright {float:right}
+					a img.alignnone {}
+					a img.alignleft {float:left}
+					a img.aligncenter {display:block;margin:0 auto}
+	
 				.alignleft{float:left}
 				.alignright{float:right}
-				.aligncenter{display:block;margin:0 auto}
+				.aligncenter,div.aligncenter{display:block;margin:0 auto}
 				
 		#comments{}
 			.commentlist{list-style:none}
 				.comment{}
-				.comment.even{}
-				.comment.odd{}
-				.comment.depth-1{}
+					.comment.even{}
+					.comment.odd{}
+					.comment.depth-1{}
+					.comment.bypostauthor{}
 					.comment-body{}
 						.comment-author{}
 							img.avatar{}
