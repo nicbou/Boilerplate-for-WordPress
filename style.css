@@ -4,6 +4,8 @@ Theme URI:http://nicolasbouliane.com/
 Description: A theme boilerplate for WordPress
 Author:Nicolas Bouliane
 Version:1.0 
+
+This file is minimized and compressed before output.
 */
 body{width:100%;height:100%;padding:0;margin:0;font:14px/22px sans-serif}
 ul,ol,li{margin:0;padding:0;list-style:inside}
@@ -32,7 +34,31 @@ ul,ol,li{margin:0;padding:0;list-style:inside}
 				.alignright{float:right}
 				.aligncenter{display:block;margin:0 auto}
 				
-				#comments{}					
-					.recentcomments a{display:inline !important;padding:0 !important;margin:0 !important;}	
-					#respond{}
+		#comments{}
+			.commentlist{list-style:none}
+				.comment{}
+				.comment.even{}
+				.comment.odd{}
+				.comment.depth-1{}
+					.comment-body{}
+						.comment-author{}
+							img.avatar{}
+							.fn{}
+							.says{}
+						.comment-meta{}
+							.comment-edit-link{}
+						.reply{}
+			.recentcomments a{display:inline !important;padding:0 !important;margin:0 !important;}	
+			#respond{}
+				#commentform{}
+					h3#reply-title{}
+					.logged-in-as{}
+					.comment-form-comment{}
+						.comment-form-comment label{}
+						#comment{}
+					.form-allowed-tags{}
+					.form-submit
+				
+	#sidebar{padding:0;margin:0}
+		#sidebar li{}
 	#footer{}
