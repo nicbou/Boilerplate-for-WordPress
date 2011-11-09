@@ -17,81 +17,42 @@
 				echo('<div class="updated"><p><strong>'. __('Your theme settings were saved.', WP_THEME_SLUG ) .'</strong></p></div>');
 			
 			//Save the theme options
-				//Dynamic title suffixes
-					if ( isset($_POST['boilerplate_use_dynamic_suffix'] ))
-						update_option('boilerplate_use_dynamic_suffix',true);
+						
+				//Loop through the $_POST checkboxes and set the corresponding wordpress options to true if they are checked
+				//This method is more compact than using if/else for each method
+					$fields = array(
+						'boilerplate_hide_admin_bar',
+						'boilerplate_hide_posts_menu',
+						'boilerplate_hide_pages_menu',
+						'boilerplate_hide_media_menu',
+						'boilerplate_hide_links_menu',
+						'boilerplate_hide_comments_menu',
+						'boilerplate_hide_profile_menu',
+						'boilerplate_hide_tools_menu',
+						'boilerplate_hide_comments_disabled',
+						'boilerplate_use_human_readable_dates',
+						'boilerplate_use_dynamic_descriptions',
+						'boilerplate_dynamic_suffixes'
+						);
+					//Loop through the checkboxes and save their value
+						foreach($fields as &$field) {
+							update_option($field, isset($_POST[$field]);
+						}
+
+				//The URL to the custom logo on the login page
+					if ( isset($_POST['boilerplate_custom_logo_url'] ) && $_POST['boilerplate_custom_logo_url']!="" )
+						//Validate the URL before saving this option. Display an error if invalid.
+							if ( is_valid_url($_POST['boilerplate_custom_logo_url']) )
+								update_option('boilerplate_custom_logo_url',$_POST['boilerplate_custom_logo_url']);
+							else
+								echo('<div class="error"><p><strong>'. __('The logo URL is invalid. Other settings were saved.', WP_THEME_SLUG ) .'</strong></p></div>');
 					else
-						update_option('boilerplate_use_dynamic_suffix',false);
-					
-				//The suffixes to use
+						//If the field is empty, unset this variable
+							update_option('boilerplate_custom_logo_url','');
+						
+				//The dynamic suffixes to use
 					if ( isset($_POST['boilerplate_dynamic_suffixes'] ))
-						update_option('boilerplate_dynamic_suffixes',explode("\n", $_POST['boilerplate_dynamic_suffixes'])); //Split the suffixes by line
-				
-				//Dynamic descriptions
-					if ( isset($_POST['boilerplate_use_dynamic_descriptions'] ))
-						update_option('boilerplate_use_dynamic_descriptions',true);
-					else
-						update_option('boilerplate_use_dynamic_descriptions',false);
-					
-				//Human-readable dates
-					if ( isset($_POST['boilerplate_use_human_readable_dates'] ))
-						update_option('boilerplate_use_human_readable_dates',true);
-					else
-						update_option('boilerplate_use_human_readable_dates',false);
-						
-				//Hide menus
-					if ( isset($_POST['boilerplate_hide_admin_bar'] ))
-						update_option('boilerplate_hide_admin_bar',true);
-					else
-						update_option('boilerplate_hide_admin_bar',false);
-
-					if ( isset($_POST['boilerplate_hide_posts_menu'] ))
-						update_option('boilerplate_hide_posts_menu',true);
-					else
-						update_option('boilerplate_hide_posts_menu',false);
-						
-					if ( isset($_POST['boilerplate_hide_pages_menu'] ))
-						update_option('boilerplate_hide_pages_menu',true);
-					else
-						update_option('boilerplate_hide_pages_menu',false);
-						
-					if ( isset($_POST['boilerplate_hide_media_menu'] ))
-						update_option('boilerplate_hide_media_menu',true);
-					else
-						update_option('boilerplate_hide_media_menu',false);
-						
-					if ( isset($_POST['boilerplate_hide_links_menu'] ))
-						update_option('boilerplate_hide_links_menu',true);
-					else
-						update_option('boilerplate_hide_links_menu',false);
-						
-					if ( isset($_POST['boilerplate_hide_comments_menu'] ))
-						update_option('boilerplate_hide_comments_menu',true);
-					else
-						update_option('boilerplate_hide_comments_menu',false);
-						
-					if ( isset($_POST['boilerplate_hide_profile_menu'] ))
-						update_option('boilerplate_hide_profile_menu',true);
-					else
-						update_option('boilerplate_hide_profile_menu',false);
-						
-					if ( isset($_POST['boilerplate_hide_tools_menu'] ))
-						update_option('boilerplate_hide_tools_menu',true);
-					else
-						update_option('boilerplate_hide_tools_menu',false);
-
-					if ( isset($_POST['boilerplate_hide_comments_disabled'] ))
-						update_option('boilerplate_hide_comments_disabled',true);
-					else
-						update_option('boilerplate_hide_comments_disabled',false);	
-
-					if ( isset($_POST['boilerplate_custom_logo_url'] ) )
-						if ( is_valid_url($_POST['boilerplate_custom_logo_url']) )
-							update_option('boilerplate_custom_logo_url',$_POST['boilerplate_custom_logo_url']);
-						else
-							echo('<div class="error"><p><strong>'. __('The logo URL is invalid. Other settings were saved.', WP_THEME_SLUG ) .'</strong></p></div>');
-					else
-						update_option('boilerplate_custom_logo_url','');
+						update_option('boilerplate_dynamic_suffixes',explode("\n", $_POST['boilerplate_dynamic_suffixes'])); //Split the suffixes into an array, and store it
 			}
 	}
 ?>
