@@ -11,7 +11,7 @@
 	<meta name="robots" content="<?php if(!is_404()){echo "index,follow";}else{echo "noindex,follow";}?>"/>
 	<link rel="profile" href="http://microformats.org/profile/hcard"/>
 	
-	<link rel="stylesheet" href="<?php bloginfo( 'template_directory' ); ?>/style.<?php echo(get_option('boilerplate_compress_css',false)?'php':'css')?>" type="text/css" media="screen"/>
+	<link rel="stylesheet" href="<?php bloginfo( 'template_directory' ); ?>/style.css" type="text/css" media="screen"/>
 	<link rel="icon" type="image/x-icon" href="<?php bloginfo( 'template_directory' ); ?>/images/favicon.ico"/>
 	
 	<?php if ( is_singular() && get_option( 'thread_comments' ) ) wp_enqueue_script( 'comment-reply' ); ?>

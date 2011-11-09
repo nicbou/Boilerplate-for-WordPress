@@ -32,8 +32,7 @@
 						'boilerplate_hide_comments_disabled',
 						'boilerplate_use_human_readable_dates',
 						'boilerplate_use_dynamic_descriptions',
-						'boilerplate_use_dynamic_suffixes',
-						'boilerplate_compress_css'
+						'boilerplate_use_dynamic_suffixes'
 						);
 					//Loop through the checkboxes and save their value
 						foreach($fields as $field) {
@@ -278,26 +277,6 @@
 					</th>
 					<td>
 						<input type="checkbox" id="chk_hide_comments_disabled" name="boilerplate_hide_comments_disabled" <?php echo(get_option('boilerplate_hide_comments_disabled',false)==true?'checked':'')?>/>
-					</td>
-				</tr>
-				
-				<tr valign="top">
-					<td colspan="2">
-						<h3><?php _e('Minify and compress stylesheets',WP_THEME_SLUG)?></h3>
-						<p>
-							<?php _e(
-								'Enabling this option will dramatically reduce the size of your CSS files by stripping comments, whitespace and unnecessary attributes, and will compress the output. This will not alter your stylesheets.',
-								WP_THEME_SLUG
-							)?>
-						</p>
-					</td>
-				</tr>
-				<tr valign="top">
-					<th scope="row">
-						<label for="chk_compress_css"><?php _e("Compress and minify CSS", WP_THEME_SLUG )?></label>
-					</th>
-					<td>
-						<input type="checkbox" id="chk_compress_css" name="boilerplate_compress_css" <?php echo(get_option('boilerplate_compress_css',false)==true?'checked':'')?>/>
 					</td>
 				</tr>
 			</tbody>
