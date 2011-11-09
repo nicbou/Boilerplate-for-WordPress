@@ -32,11 +32,12 @@
 						'boilerplate_hide_comments_disabled',
 						'boilerplate_use_human_readable_dates',
 						'boilerplate_use_dynamic_descriptions',
-						'boilerplate_dynamic_suffixes'
+						'boilerplate_use_dynamic_suffixes',
+						'boilerplate_compress_css'
 						);
 					//Loop through the checkboxes and save their value
-						foreach($fields as &$field) {
-							update_option($field, isset($_POST[$field]);
+						foreach($fields as $field) {
+							update_option($field, isset($_POST[$field]));
 						}
 
 				//The URL to the custom logo on the login page
@@ -112,16 +113,16 @@
 						<label for="chk_dynamic_suffix"><?php _e("Use dynamic title suffixes", WP_THEME_SLUG )?></label>
 					</th>
 					<td>
-						<input type="checkbox" id="chk_dynamic_suffix" name="boilerplate_use_dynamic_suffix"
-							onclick="document.getElementById(\'txt_dynamic_suffix\').disabled = !this.checked" <?php echo(get_option('boilerplate_use_dynamic_suffix',false)==true?'checked':'')?>/>
+						<input type="checkbox" id="chk_dynamic_suffix" name="boilerplate_use_dynamic_suffixes"
+							onclick="document.getElementById(\'txt_dynamic_suffix\').disabled = !this.checked" <?php echo(get_option('boilerplate_use_dynamic_suffixes',false)==true?'checked':'')?>/>
 					</td>
 				</tr>
 				<tr valign="top">
 					<th scope="row" colspan=2>
-						<label for="txt_dynamic_suffix">Available title suffixes:</label>
+						<label for="txt_dynamic_suffix"><?php _e('Title suffixes to use:',WP_THEME_SLUG)?></label>
 						<textarea cols="60" rows="6"
 							id="txt_dynamic_suffix" class="large-text code" name="boilerplate_dynamic_suffixes"
-							<?php(get_option('boilerplate_use_dynamic_suffix',false)==true?'':'disabled')?><?php echo(implode("\n",get_option('boilerplate_dynamic_suffixes',array(''))))?></textarea>
+							<?php(get_option('boilerplate_use_dynamic_suffixes',false)==true?'':'disabled')?><?php echo(implode("\n",get_option('boilerplate_dynamic_suffixes',array(''))))?></textarea>
 					</th>
 				</tr>
 				
@@ -277,6 +278,26 @@
 					</th>
 					<td>
 						<input type="checkbox" id="chk_hide_comments_disabled" name="boilerplate_hide_comments_disabled" <?php echo(get_option('boilerplate_hide_comments_disabled',false)==true?'checked':'')?>/>
+					</td>
+				</tr>
+				
+				<tr valign="top">
+					<td colspan="2">
+						<h3><?php _e('Minify and compress stylesheets',WP_THEME_SLUG)?></h3>
+						<p>
+							<?php _e(
+								'Enabling this option will dramatically reduce the size of your CSS files by stripping comments, whitespace and unnecessary attributes, and will compress the output. This will not alter your stylesheets.',
+								WP_THEME_SLUG
+							)?>
+						</p>
+					</td>
+				</tr>
+				<tr valign="top">
+					<th scope="row">
+						<label for="chk_compress_css"><?php _e("Compress and minify CSS", WP_THEME_SLUG )?></label>
+					</th>
+					<td>
+						<input type="checkbox" id="chk_compress_css" name="boilerplate_compress_css" <?php echo(get_option('boilerplate_compress_css',false)==true?'checked':'')?>/>
 					</td>
 				</tr>
 			</tbody>
