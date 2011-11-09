@@ -9,7 +9,10 @@
 //=================================================================================================
 
 //Required by WordPress
-	add_theme_support( 'automatic-feed-links' );
+	add_theme_support('automatic-feed-links');
+	
+	//CONTENT WIDTH
+		if ( ! isset( $content_width ) ) $content_width = 1200;
 	
 	//MENU
 		//Register the main menu
