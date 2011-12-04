@@ -3,7 +3,7 @@
 //== DEVELOPMENT OPTIONS ==========================================================================
 
 	//Set the theme's slug/textdomain (used in __() and _e() functions)
-		define('WP_THEME_SLUG','boilerplate-barebones');
+		define('WP_THEME_SLUG','building-blocks');
 		
 
 //=================================================================================================
