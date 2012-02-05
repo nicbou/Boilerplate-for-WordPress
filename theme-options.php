@@ -120,8 +120,8 @@
 					<th scope="row" colspan=2>
 						<label for="txt_dynamic_suffix"><?php _e('Title suffixes to use:',WP_THEME_SLUG)?></label>
 						<textarea cols="60" rows="6"
-							id="txt_dynamic_suffix" class="large-text code" name="boilerplate_dynamic_suffixes"
-							<?php(get_option('boilerplate_use_dynamic_suffixes',false)==true?'':'disabled')?><?php echo(implode("\n",get_option('boilerplate_dynamic_suffixes',array(''))))?></textarea>
+							id="txt_dynamic_suffix" class="large-text code" name="boilerplate_dynamic_suffixes"/>
+							<?php (get_option('boilerplate_use_dynamic_suffixes',false)==true?'':'disabled'); echo(implode("\n",get_option('boilerplate_dynamic_suffixes',array('')))) ?></textarea>
 					</th>
 				</tr>
 				
