@@ -53,7 +53,7 @@
 				usort($available_suffixes,'sort_suffixes');
 				
 				//Set the default suffix (the blog's name alone)
-					$suffix = ' ' . get_bloginfo('name');
+					$suffix = ' ' . get_bloginfo('description');
 					
 				//If it's not the frontpage and this feature is enabled, find an appropriate suffix in the array
 					if(!is_front_page() && get_option('boilerplate_use_dynamic_suffix',false)){
