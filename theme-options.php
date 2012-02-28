@@ -32,7 +32,12 @@
 						'boilerplate_hide_comments_disabled',
 						'boilerplate_use_human_readable_dates',
 						'boilerplate_use_dynamic_descriptions',
-						'boilerplate_use_dynamic_suffixes'
+						'boilerplate_use_dynamic_suffixes',
+						'boilerplate_hide_attachment_alignment',
+						'boilerplate_hide_attachment_insert',
+						'boilerplate_hide_attachment_link',
+						'boilerplate_hide_attachment_description',
+						'boilerplate_hide_attachment_caption'
 						);
 					//Loop through the checkboxes and save their value
 						foreach($fields as $field) {
@@ -119,9 +124,7 @@
 				<tr valign="top">
 					<th scope="row" colspan=2>
 						<label for="txt_dynamic_suffix"><?php _e('Title suffixes to use:','building-blocks')?></label>
-						<textarea cols="60" rows="6"
-							id="txt_dynamic_suffix" class="large-text code" name="boilerplate_dynamic_suffixes"/>
-							<?php (get_option('boilerplate_use_dynamic_suffixes',false)==true?'':'disabled'); echo(implode("\n",get_option('boilerplate_dynamic_suffixes',array('')))) ?></textarea>
+						<textarea cols="60" rows="6" id="txt_dynamic_suffix" class="large-text code" name="boilerplate_dynamic_suffixes"/><?php (get_option('boilerplate_use_dynamic_suffixes',false)==true?'':'disabled'); echo(implode("\n",get_option('boilerplate_dynamic_suffixes',array('')))) ?></textarea>
 					</th>
 				</tr>
 				
@@ -240,6 +243,59 @@
 						<input type="checkbox" id="chk_hide_tools_menu" name="boilerplate_hide_tools_menu" <?php echo(get_option('boilerplate_hide_tools_menu',false)==true?'checked':'')?>/>
 					</td>
 				</tr>
+				
+				<tr valign="top">
+					<td colspan="2">
+						<h3><?php _e('File uploads','building-blocks')?></h3>
+						<p>
+							<?php _e(
+								'Check these boxes to hide fields for file attachments. Less clutter means a more streamlined experience for clients.',
+								'building-blocks'
+							)?>
+						</p>
+					</td>
+				</tr>
+				<tr valign="top">
+					<th scope="row">
+						<label for="chk_hide_attachment_caption"><?php _e("Hide the caption field", 'building-blocks' )?></label>
+					</th>
+					<td>
+						<input type="checkbox" id="chk_hide_attachment_caption" name="boilerplate_hide_attachment_caption" <?php echo(get_option('boilerplate_hide_attachment_caption',false)==true?'checked':'')?>/>
+					</td>
+				</tr>
+				<tr valign="top">
+					<th scope="row">
+						<label for="chk_hide_attachment_description"><?php _e("Hide the description field", 'building-blocks' )?></label>
+					</th>
+					<td>
+						<input type="checkbox" id="chk_hide_attachment_description" name="boilerplate_hide_attachment_description" <?php echo(get_option('boilerplate_hide_attachment_description',false)==true?'checked':'')?>/>
+					</td>
+				</tr>
+				<tr valign="top">
+					<th scope="row">
+						<label for="chk_hide_attachment_link"><?php _e("Hide the URL field", 'building-blocks' )?></label>
+					</th>
+					<td>
+						<input type="checkbox" id="chk_hide_attachment_link" name="boilerplate_hide_attachment_link" <?php echo(get_option('boilerplate_hide_attachment_link',false)==true?'checked':'')?>/>
+					</td>
+				</tr>
+				<tr valign="top">
+					<th scope="row">
+						<label for="chk_hide_attachment_align"><?php _e('Hide the alignment options', 'building-blocks' )?></label>
+					</th>
+					<td>
+						<input type="checkbox" id="chk_hide_attachment_align" name="boilerplate_hide_attachment_alignment" <?php echo(get_option('boilerplate_hide_attachment_alignment',false)==true?'checked':'')?>/>
+					</td>
+				</tr>
+				<tr valign="top">
+					<th scope="row">
+						<label for="chk_hide_attachment_insert"><?php _e('Hide the "insert into post" button', 'building-blocks' )?></label>
+					</th>
+					<td>
+						<input type="checkbox" id="chk_hide_attachment_insert" name="boilerplate_hide_attachment_insert" <?php echo(get_option('boilerplate_hide_attachment_insert',false)==true?'checked':'')?>/>
+					</td>
+				</tr>
+				
 				<tr valign="top">
 					<td colspan="2">
 						<h3><?php _e('Custom login image','building-blocks')?></h3>
