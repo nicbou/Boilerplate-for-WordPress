@@ -111,7 +111,7 @@
 		
 	//Remove h1 tags and automatically show the kitchen sink
 		function change_mce_options( $init ) {
-			$init['theme_advanced_blockformats'] = 'p,pre,code,h2,h3,h4,h5,h6';
+			$init['theme_advanced_blockformats'] = 'p,code,h2,h3,h4,h5,h6';
 			$init['theme_advanced_disable'] = 'forecolor';
 			$init['wordpress_adv_hidden'] = false;
 			return $init;
@@ -169,6 +169,17 @@
 	//Disable the admin bar for logged in users
 		if(get_option('boilerplate_hide_admin_bar',false)==true){
 			add_filter( 'show_admin_bar', '__return_false' ); 
+		}
+		
+	//Hide the admin bar logo for logged in users
+		function annointed_admin_bar_remove() {
+			  global $wp_admin_bar;
+
+			  /* Remove their stuff */
+			  $wp_admin_bar->remove_menu('wp-logo');
+		}
+		if(get_option('boilerplate_hide_admin_bar_logo',false)==true){
+			add_action('wp_before_admin_bar_render', 'annointed_admin_bar_remove', 0);
 		}
 		
 	//Add the plugin options page

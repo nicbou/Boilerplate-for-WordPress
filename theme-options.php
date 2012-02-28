@@ -22,6 +22,7 @@
 				//This method is more compact than using if/else for each method
 					$fields = array(
 						'boilerplate_hide_admin_bar',
+						'boilerplate_hide_admin_bar_logo',
 						'boilerplate_hide_posts_menu',
 						'boilerplate_hide_pages_menu',
 						'boilerplate_hide_media_menu',
@@ -184,6 +185,14 @@
 					</th>
 					<td>
 						<input type="checkbox" id="chk_hide_top_bar" name="boilerplate_hide_admin_bar" <?php echo(get_option('boilerplate_hide_admin_bar',false)==true?'checked':'')?>/>
+					</td>
+				</tr>
+				<tr valign="top">
+					<th scope="row">
+						<label for="chk_hide_top_bar_logo"><?php _e("Remove the logo from the top admin bar", 'building-blocks' )?></label>
+					</th>
+					<td>
+						<input type="checkbox" id="chk_hide_top_bar_logo" name="boilerplate_hide_admin_bar_logo" <?php echo(get_option('boilerplate_hide_admin_bar_logo',false)==true?'checked':'')?>/>
 					</td>
 				</tr>
 				<tr valign="top">

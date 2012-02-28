@@ -4,7 +4,7 @@
 		<div <?php post_class()?>>
 			<h1 class="title"><?php the_title()?></h1>
 			<p><?php the_date()?></p>
-			<div class="content"><?php the_content()?></div>
+			<div class="post-content"><?php the_content()?></div>
 			<?php if(has_tag()){the_tags( _e('Keywords','building-blocks') . ': ', ', ');}?>
 			<?php wp_link_pages() //Page buttons for multi-page posts?>
 		</div>
