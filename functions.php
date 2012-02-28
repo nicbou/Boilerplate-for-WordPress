@@ -2,12 +2,6 @@
 
 //== DEVELOPMENT OPTIONS ==========================================================================
 
-	//Set the theme's slug/textdomain (used in __() and _e() functions)
-		define(''building-blocks'','building-blocks');
-		
-
-//=================================================================================================
-
 //Required by WordPress
 	add_theme_support('automatic-feed-links');
 	
