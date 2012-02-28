@@ -11,6 +11,10 @@
 //Required by WordPress
 	add_theme_support('automatic-feed-links');
 	
+	//COMMENTS SCRIPT
+		if ( is_singular() && get_option( 'thread_comments' ) )
+			wp_enqueue_script( 'comment-reply' );
+	
 	//CONTENT WIDTH
 		if ( ! isset( $content_width ) ) $content_width = 1200;
 	
