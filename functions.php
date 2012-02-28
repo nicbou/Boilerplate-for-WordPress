@@ -108,6 +108,15 @@
 			';
 		}
 		add_action('admin_footer', 'custom_admin_js');
+		
+	//Remove h1 tags and automatically show the kitchen sink
+		function change_mce_options( $init ) {
+			$init['theme_advanced_blockformats'] = 'p,pre,code,h2,h3,h4,h5,h6';
+			$init['theme_advanced_disable'] = 'forecolor';
+			$init['wordpress_adv_hidden'] = false;
+			return $init;
+		}
+		add_filter('tiny_mce_before_init', 'change_mce_options');
 //ADMIN
 
 	//Load the site's CSS in the editor
