@@ -3,7 +3,7 @@
 <head profile="http://gmpg.org/xfn/11">
 	<meta http-equiv="content-type" content="<?php bloginfo('html_type')?>;charset=<?php bloginfo('charset'); ?>"/>
 	
-	<title><?php make_title()?></title>
+	<title><?php make_title()//Uses wp_title by default?></title>
 	<meta name="description" content="<?php make_description()?>"/>
 	<meta name="keywords" content="<?php if (is_single() && get_tags()) { foreach(get_tags() as $tag){ echo $tag->name . ', '; }}?>"/>
 	

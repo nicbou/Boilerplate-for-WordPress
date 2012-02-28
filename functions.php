@@ -99,6 +99,15 @@
 		}
 		add_action( 'widgets_init', 'my_remove_recent_comments_style' );
 		
+	//Add a label next to the media upload button, to make it easy to understand
+		function custom_admin_js() {
+			echo '
+				<script type="text/javascript">
+					var elem = document.getElementById("content-add_media");
+					elem.innerHTML = "<img src=\''.get_bloginfo('template_directory').'/images/mediaupload.png\'/>'.__('Click to add pictures or videos','building-blocks').'";</script>
+			';
+		}
+		add_action('admin_footer', 'custom_admin_js');
 //ADMIN
 
 	//Load the site's CSS in the editor
