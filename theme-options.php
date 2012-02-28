@@ -249,7 +249,7 @@
 						<h3><?php _e('File uploads','building-blocks')?></h3>
 						<p>
 							<?php _e(
-								'Check these boxes to hide fields for file attachments. Less clutter means a more streamlined experience for clients.',
+								'Check these boxes to hide fields and tabs for file attachments. Less clutter means a more streamlined experience for clients. These settings only apply to non-admins.',
 								'building-blocks'
 							)?>
 						</p>
