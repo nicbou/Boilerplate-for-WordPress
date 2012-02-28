@@ -178,42 +178,20 @@
 					$form_fields['url']['value'] = '';
 					$form_fields['url']['input'] = 'hidden';
 				}
-				if(get_option('boilerplate_hide_attachment_alignment',false)==true){
-					$form_fields['align']['value'] = 'aligncenter';
-					$form_fields['align']['input'] = 'hidden';
-				}
-				if(get_option('boilerplate_hide_attachment_insert',false)==true){
-					//Hide "insert into post"
-						$form_fields['buttons'] = array(
-							'label' => '',
-							'value' => '',
-							'input' => 'html'
-						);
-					//Keep the delete button
-						$filename = basename( $post->guid );
-						$attachment_id = $post->ID;
-						if ( current_user_can( 'delete_post', $attachment_id ) ) {
-							if ( !EMPTY_TRASH_DAYS ) {
-								$form_fields['buttons']['html'] = "<a href='" . wp_nonce_url( "post.php?action=delete&amp;post=$attachment_id", 'delete-attachment_' . $attachment_id ) . "' id='del[$attachment_id]' class='delete'>" . __( 'Delete Permanently' ) . '</a>';
-							} elseif ( !MEDIA_TRASH ) {
-							$form_fields['buttons']['html'] = "<a href='#' class='del-link' onclick=\"document.getElementById('del_attachment_$attachment_id').style.display='block';return false;\">" . __( 'Supprimer ce fichier' ) . "</a>
-								<div id='del_attachment_$attachment_id' class='del-attachment' style='display:none;'>" . sprintf( __( 'You are about to delete <strong>%s</strong>.' ), $filename ) . "
-									<a href='" . wp_nonce_url( "post.php?action=delete&amp;post=$attachment_id", 'delete-attachment_' . $attachment_id ) . "' id='del[$attachment_id]' class='button'>" . __( 'Continue' ) . "</a>
-									<a href='#' class='button' onclick=\"this.parentNode.style.display='none';return false;\">" . __( 'Cancel' ) . "</a>
-								</div>";
-							} else {
-								$form_fields['buttons']['html'] = "<a href='" . wp_nonce_url( "post.php?action=trash&amp;post=$attachment_id", 'trash-attachment_' . $attachment_id ) . "' id='del[$attachment_id]' class='delete'>" . __( 'Move to Trash' ) . "</a><a href='" . wp_nonce_url( "post.php?action=untrash&amp;post=$attachment_id", 'untrash-attachment_' . $attachment_id ) . "' id='undo[$attachment_id]' class='undo hidden'>" . __( 'Undo' ) . "</a>";
-							}
-						}
-						else {
-							$form_fields['buttons']['html'] = '';
-						}
-				}
 			}
 			return $form_fields;
 		}
 		add_filter("attachment_fields_to_edit", "hide_attachment_fields", null, 2);
 		
+	//Hide file upload tabs
+		function remove_media_library_tab($tabs) {
+			if (!current_user_can('administrator') && get_option('boilerplate_hide_attachment_library',false)==true && isset($_REQUEST['post_id'])) {
+				unset($tabs['library']);
+			}
+			return $tabs;
+		}
+		add_filter('media_upload_tabs', 'remove_media_library_tab');
+
 //LOCALIZATION
 	
 	//Enable localization

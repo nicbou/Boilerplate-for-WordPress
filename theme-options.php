@@ -33,11 +33,10 @@
 						'boilerplate_use_human_readable_dates',
 						'boilerplate_use_dynamic_descriptions',
 						'boilerplate_use_dynamic_suffixes',
-						'boilerplate_hide_attachment_alignment',
-						'boilerplate_hide_attachment_insert',
 						'boilerplate_hide_attachment_link',
 						'boilerplate_hide_attachment_description',
-						'boilerplate_hide_attachment_caption'
+						'boilerplate_hide_attachment_caption',
+						'boilerplate_hide_attachment_library'
 						);
 					//Loop through the checkboxes and save their value
 						foreach($fields as $field) {
@@ -257,6 +256,14 @@
 				</tr>
 				<tr valign="top">
 					<th scope="row">
+						<label for="chk_hide_attachment_library"><?php _e("Hide the Media Library tab", 'building-blocks' )?></label>
+					</th>
+					<td>
+						<input type="checkbox" id="chk_hide_attachment_library" name="boilerplate_hide_attachment_library" <?php echo(get_option('boilerplate_hide_attachment_library',false)==true?'checked':'')?>/>
+					</td>
+				</tr>
+				<tr valign="top">
+					<th scope="row">
 						<label for="chk_hide_attachment_caption"><?php _e("Hide the caption field", 'building-blocks' )?></label>
 					</th>
 					<td>
@@ -277,22 +284,6 @@
 					</th>
 					<td>
 						<input type="checkbox" id="chk_hide_attachment_link" name="boilerplate_hide_attachment_link" <?php echo(get_option('boilerplate_hide_attachment_link',false)==true?'checked':'')?>/>
-					</td>
-				</tr>
-				<tr valign="top">
-					<th scope="row">
-						<label for="chk_hide_attachment_align"><?php _e('Hide the alignment options', 'building-blocks' )?></label>
-					</th>
-					<td>
-						<input type="checkbox" id="chk_hide_attachment_align" name="boilerplate_hide_attachment_alignment" <?php echo(get_option('boilerplate_hide_attachment_alignment',false)==true?'checked':'')?>/>
-					</td>
-				</tr>
-				<tr valign="top">
-					<th scope="row">
-						<label for="chk_hide_attachment_insert"><?php _e('Hide the "insert into post" button', 'building-blocks' )?></label>
-					</th>
-					<td>
-						<input type="checkbox" id="chk_hide_attachment_insert" name="boilerplate_hide_attachment_insert" <?php echo(get_option('boilerplate_hide_attachment_insert',false)==true?'checked':'')?>/>
 					</td>
 				</tr>
 				
