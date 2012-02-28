@@ -3,7 +3,7 @@
 //== DEVELOPMENT OPTIONS ==========================================================================
 
 	//Set the theme's slug/textdomain (used in __() and _e() functions)
-		define('WP_THEME_SLUG','building-blocks');
+		define(''building-blocks'','building-blocks');
 		
 
 //=================================================================================================
@@ -17,14 +17,14 @@
 	//MENU
 		//Register the main menu
 			if ( function_exists( 'register_nav_menu' ) ) {
-				register_nav_menu( 'main-menu', __('Main menu',WP_THEME_SLUG) );
+				register_nav_menu( 'main-menu', __('Main menu','building-blocks') );
 			}
 	
 	//SIDEBAR
 		//Register the main sidebar
 			$args = array(
 				'name'          => 'Main sidebar',
-				'description'   => __('The main sidebar used across most pages',WP_THEME_SLUG),
+				'description'   => __('The main sidebar used across most pages','building-blocks'),
 				'before_widget' => '<li class="sidebaritem">',
 				'after_widget'  => '</li>',
 				'before_title'  => '<span class="title">',
@@ -53,7 +53,7 @@
 				usort($available_suffixes,'sort_suffixes');
 				
 				//Set the default suffix (the blog's name alone)
-					$suffix = ' ' . get_bloginfo('name');
+					$suffix = ' ' . get_bloginfo('description');
 					
 				//If it's not the frontpage and this feature is enabled, find an appropriate suffix in the array
 					if(!is_front_page() && get_option('boilerplate_use_dynamic_suffix',false)){
@@ -90,7 +90,7 @@
 	//Use the "x days ago" date format
 		if( get_option('boilerplate_use_human_readable_dates',false) ){
 			function time_ago_date($date){
-				return sprintf( _x("Posted %s ago",'The %s parameter is a date like "5 days" or "3 minutes"',WP_THEME_SLUG), human_time_diff(get_the_time('U'), current_time('timestamp')) );
+				return sprintf( _x("Posted %s ago",'The %s parameter is a date like "5 days" or "3 minutes"','building-blocks'), human_time_diff(get_the_time('U'), current_time('timestamp')) );
 			}
 			add_filter('the_date','time_ago_date');
 		}
@@ -158,7 +158,7 @@
 	//Add the plugin options page
 		add_action('admin_menu', 'boilerplate_barebones_menu');
 		function boilerplate_barebones_menu() {
-			add_theme_page('Theme options', 'Theme options', 'manage_options', WP_THEME_SLUG, 'boilerplate_theme_options');
+			add_theme_page('Theme options', 'Theme options', 'manage_options', 'building-blocks', 'boilerplate_theme_options');
 		}
 		function boilerplate_theme_options() {
 			//Display the theme options
@@ -169,7 +169,7 @@
 //LOCALIZATION
 	
 	//Enable localization
-		load_theme_textdomain(WP_THEME_SLUG,get_template_directory() . '/languages');
+		load_theme_textdomain('building-blocks',get_template_directory() . '/languages');
 		
 		
 //UTILITY

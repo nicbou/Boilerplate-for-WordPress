@@ -14,12 +14,12 @@ get_header(); ?>
 			
 			<?php get_search_form(); ?>
 			
-			<h2><?php _e('Archives by month',WP_THEME_SLUG)?></h2>
+			<h2><?php _e('Archives by month','building-blocks')?></h2>
 			<ul>
 				<?php wp_get_archives('type=monthly'); ?>
 			</ul>
 			
-			<h2><?php _e('Archives by category',WP_THEME_SLUG)?></h2>
+			<h2><?php _e('Archives by category','building-blocks')?></h2>
 			<ul>
 				 <?php wp_list_categories(); ?>
 			</ul>
