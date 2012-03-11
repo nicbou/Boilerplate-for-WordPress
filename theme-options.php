@@ -8,7 +8,7 @@
 
 	//Kick the user out if he doesn't have the right permissions
 	if (!current_user_can('manage_options'))  {
-		wp_die( _e('You do not have sufficient permissions to access this page.','building-blocks') );
+		wp_die( __('You do not have sufficient permissions to access this page.','building-blocks') );
 	}
 	else{
 		//If POST data was submitted, begin saving the options
