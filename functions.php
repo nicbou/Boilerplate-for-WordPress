@@ -30,6 +30,9 @@
 			if ( function_exists('register_sidebar') ){
 				register_sidebar($args);
 			}
+			
+	//CUSTOM BACKGROUND SUPPORT
+		add_custom_background();
 	
 //FILTERS
 
