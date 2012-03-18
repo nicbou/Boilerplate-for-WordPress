@@ -14,12 +14,14 @@ body{width:100%;height:100%;padding:0;margin:0;font:14px sans-serif}
 #wrapper{}
 	#header{}
 		#banner{}
+			#logo{}
 		.menu li{}
 			.current-page-item{}
 			.menu li a{}
 			.menu li ul.children{}
 	#content{}
 		.post,.page{}
+			.single{}				
 			.sticky{}
 			.title{}
 			.post-content{}

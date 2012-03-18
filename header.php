@@ -20,7 +20,7 @@
 	<div id="wrapper">
 		<div id="header">
 			<div id="banner">
-				<a href="<?php echo site_url()?>" title="<?php bloginfo('name')?>"><?php bloginfo('name')?></a>	
+				<a id="logo" href="<?php echo site_url()?>" title="<?php bloginfo('name')?>"><?php bloginfo('name')?></a>	
 			</div>
 			<?php $args = array(
 				'theme_location'  => 'main-menu',
