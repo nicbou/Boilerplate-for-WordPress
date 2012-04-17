@@ -8,6 +8,8 @@ Boilerplate is a barebones WordPress theme intended to speed up WordPress theme 
 * Hideable admin menus and admin bar
 * Hideable media upload fields and tabs
 * Hideable "comments disabled" message
+* Minor usability fixes (show all editor buttons by default, remove H1 from editor, less ambiguous media upload button)
+* Minor annoyance fixes (remove useless scripts)
 * Hooks and filters
 
 It is also updated on WordPress.org under the name "Building Blocks".
