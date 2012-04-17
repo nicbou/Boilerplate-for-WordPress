@@ -2,7 +2,7 @@
 	<div id="content">
 		<?php if ( have_posts() ) : while ( have_posts() ) : the_post(); //The Loop?>
 		<div <?php post_class()?>>
-			<h1 class="title"><?php the_title()?></h1>
+			<h1 class="title"><?php do_action('before_title'); the_title(); do_action('after_title');?></h1>
 			<p><?php the_date()?></p>
 			<div class="post-content"><?php the_content()?></div>
 			<?php if(has_tag()){the_tags( _e('Keywords','building-blocks') . ': ', ', ');}?>
