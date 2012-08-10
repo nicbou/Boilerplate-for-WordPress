@@ -133,12 +133,12 @@
 				echo '
 				<style type="text/css">
 					h1,#login{
-						width:' . $size[0] . 'px;
+						width:' . $size[0] . 'px!important;
 					}
 					h1 a {
-						background-image: url(' . get_option('boilerplate_custom_logo_url','') . ');
-						width:' . $size[0] . 'px;
-						height:' . $size[1] . 'px;
+						background-image: url(' . get_option('boilerplate_custom_logo_url','') . ')!important;
+						width:' . $size[0] . 'px!important;
+						height:' . $size[1] . 'px!important;
 					}
 				</style>';
 		}
