@@ -6,8 +6,8 @@ Author URI: http://nicolasbouliane.com
 Description: A theme skeleton that has everything you need to quickly start building feature-rich themes without the bloat of theme frameworks.
 Version:1.0 
 Tags: White, light, custom-menu, editor-style, microformats, theme-options, translation-ready
-License: GNU General Public License v2.0
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
+License: Creative Commons Attribution 3.0 Unported
+License URI: http://creativecommons.org/licenses/by/3.0/deed.en_US
 */
 
 
@@ -35,38 +35,42 @@ body#tinymce{}
 			.title{}
 			.post-content{}
 			.page-content{}
-				h1,h2,h3,h4,h5,h6,p,pre,blockquote,address,ul,ol,dt,dd{font-weight:400;padding:0;margin:0}
-				h1,.post .title,.page .title{}
-				h2{}
-				h3{}
-				h4{}
-				h5, h6, h7{}
-				p{}
-				pre{}
-				blockquote{}
-				address{}
-				ul{}
-				ol{}
-				dt{}
-				dd{}
-				a img{border:0}
-				.gallery-caption{}
-				.content img{}
-					.wp-caption{background:#ddd}
-						.wp-caption img{}
-						.wp-caption p.wp-caption-text{}
-						.wp-caption.alignleft{}
-						.wp-caption.alignright{}
-						.wp-caption.aligncenter{}
-					a img.alignright {float:right}
-					a img.alignnone {}
-					a img.alignleft {float:left}
-					a img.aligncenter {display:block;margin:0 auto}
-	
-				.alignleft{float:left}
-				.alignright{float:right}
-				.aligncenter,div.aligncenter{display:block;margin:0 auto}
-				
+				/* Various post content */
+					h1,.post .title,.page .title{}
+					h2{}
+					h3{}
+					h4{}
+					h5{}
+					h6{}
+					p{}
+					pre{}
+					blockquote{}
+					address{}
+					ul{}
+					ol{}
+					dl{}
+						dt{}
+						dd{}
+
+				/* Images and galleries */
+					a img{border:0}
+					.gallery-caption{}
+					.content img{}
+						.wp-caption{background:#ddd}
+							.wp-caption img{}
+							.wp-caption p.wp-caption-text{}
+							.wp-caption.alignleft{}
+							.wp-caption.alignright{}
+							.wp-caption.aligncenter{}
+						a img.alignright {float:right}
+						a img.alignnone {}
+						a img.alignleft {float:left}
+						a img.aligncenter {display:block;margin:0 auto}
+		
+					.alignleft{float:left}
+					.alignright{float:right}
+					.aligncenter,div.aligncenter{display:block;margin:0 auto}
+
 		#comments{}
 			.commentlist{list-style:none}
 				.comment{}
@@ -82,7 +86,7 @@ body#tinymce{}
 						.comment-meta{}
 							.comment-edit-link{}
 						.reply{}
-			.recentcomments a{display:inline !important;padding:0 !important;margin:0 !important;}	
+			.recentcomments a{display:inline!important;padding:0!important;margin:0!important}	
 			#respond{}
 				#commentform{}
 					h3#reply-title{}
@@ -92,8 +96,8 @@ body#tinymce{}
 						#comment{}
 					.form-allowed-tags{}
 					.form-submit{}
-				
-	#sidebar{padding:0;margin:0}
+
+	#sidebar{}
 		.sidebaritem{}
 			.sidebaritem .title{}
 	#footer{}
