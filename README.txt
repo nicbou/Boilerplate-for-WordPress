@@ -1,11 +1,18 @@
 Boilerplate is a barebones WordPress theme intended to speed up WordPress theme development. It includes all the features you should expect from WordPress themes along with a ton of useful optional features:
 
-* SEO-friendly titles and descriptions
-* "x days ago" dates
+* Empty CSS selectors. Just add your styles.
+* Widget and custom menu support
+* Custom meta description support
+* Dynamic title suffix support (picks a different title suffix on every page, making sure the title is under 60 characters)
+* "x days ago" date support
 * Hideable admin menus and admin bar
-* Custom login page logo
-* Compressed and minified CSS
-* ...
+* Hideable media upload fields and tabs
+* Hideable "comments disabled" message
+* Minor usability fixes (show all editor buttons by default, remove H1 from editor, less ambiguous media upload button)
+* Minor annoyance fixes (remove useless scripts)
+* Hooks and filters
+
+It is also updated on WordPress.org under the name "Building Blocks".
 
 The theme provides an empty stylesheet with all the selectors ready to be filled in. All you have to do is enter your CSS, and you are good to go!
 

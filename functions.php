@@ -2,14 +2,12 @@
 
 //== DEVELOPMENT OPTIONS ==========================================================================
 
-	//Set the theme's slug/textdomain (used in __() and _e() functions)
-		define('WP_THEME_SLUG','building-blocks');
-		
-
-//=================================================================================================
-
 //Required by WordPress
 	add_theme_support('automatic-feed-links');
+	
+	//COMMENTS SCRIPT
+		if ( is_singular() && get_option( 'thread_comments' ) )
+			wp_enqueue_script( 'comment-reply' );
 	
 	//CONTENT WIDTH
 		if ( ! isset( $content_width ) ) $content_width = 1200;
@@ -17,14 +15,14 @@
 	//MENU
 		//Register the main menu
 			if ( function_exists( 'register_nav_menu' ) ) {
-				register_nav_menu( 'main-menu', __('Main menu',WP_THEME_SLUG) );
+				register_nav_menu( 'main-menu', __('Main menu','building-blocks') );
 			}
 	
 	//SIDEBAR
 		//Register the main sidebar
 			$args = array(
 				'name'          => 'Main sidebar',
-				'description'   => __('The main sidebar used across most pages',WP_THEME_SLUG),
+				'description'   => __('The main sidebar used across most pages','building-blocks'),
 				'before_widget' => '<li class="sidebaritem">',
 				'after_widget'  => '</li>',
 				'before_title'  => '<span class="title">',
@@ -32,6 +30,9 @@
 			if ( function_exists('register_sidebar') ){
 				register_sidebar($args);
 			}
+			
+	//CUSTOM BACKGROUND SUPPORT
+		add_custom_background();
 	
 //FILTERS
 
@@ -53,7 +54,7 @@
 				usort($available_suffixes,'sort_suffixes');
 				
 				//Set the default suffix (the blog's name alone)
-					$suffix = ' ' . get_bloginfo('name');
+					$suffix = ' ' . get_bloginfo('description');
 					
 				//If it's not the frontpage and this feature is enabled, find an appropriate suffix in the array
 					if(!is_front_page() && get_option('boilerplate_use_dynamic_suffix',false)){
@@ -90,7 +91,7 @@
 	//Use the "x days ago" date format
 		if( get_option('boilerplate_use_human_readable_dates',false) ){
 			function time_ago_date($date){
-				return sprintf( _x("Posted %s ago",'The %s parameter is a date like "5 days" or "3 minutes"',WP_THEME_SLUG), human_time_diff(get_the_time('U'), current_time('timestamp')) );
+				return sprintf( _x("Posted %s ago",'The %s parameter is a date like "5 days" or "3 minutes"','building-blocks'), human_time_diff(get_the_time('U'), current_time('timestamp')) );
 			}
 			add_filter('the_date','time_ago_date');
 		}
@@ -101,6 +102,24 @@
 		}
 		add_action( 'widgets_init', 'my_remove_recent_comments_style' );
 		
+	//Add a label next to the media upload button, to make it easy to understand
+		function custom_admin_js() {
+			echo '
+				<script type="text/javascript">
+					var elem = document.getElementById("content-add_media");
+					elem.innerHTML = "<img src=\''.get_bloginfo('template_directory').'/images/mediaupload.png\'/>'.__('Click to add pictures or videos','building-blocks').'";</script>
+			';
+		}
+		add_action('admin_footer', 'custom_admin_js');
+		
+	//Remove h1 tags and automatically show the kitchen sink
+		function change_mce_options( $init ) {
+			$init['theme_advanced_blockformats'] = 'p,code,h2,h3,h4,h5,h6';
+			$init['theme_advanced_disable'] = 'forecolor';
+			$init['wordpress_adv_hidden'] = false;
+			return $init;
+		}
+		add_filter('tiny_mce_before_init', 'change_mce_options');
 //ADMIN
 
 	//Load the site's CSS in the editor
@@ -114,12 +133,12 @@
 				echo '
 				<style type="text/css">
 					h1,#login{
-						width:' . $size[0] . 'px;
+						width:' . $size[0] . 'px!important;
 					}
 					h1 a {
-						background-image: url(' . get_option('boilerplate_custom_logo_url','') . ');
-						width:' . $size[0] . 'px;
-						height:' . $size[1] . 'px;
+						background-image: url(' . get_option('boilerplate_custom_logo_url','') . ')!important;
+						width:' . $size[0] . 'px!important;
+						height:' . $size[1] . 'px!important;
 					}
 				</style>';
 		}
@@ -155,21 +174,60 @@
 			add_filter( 'show_admin_bar', '__return_false' ); 
 		}
 		
+	//Hide the admin bar logo for logged in users
+		function annointed_admin_bar_remove() {
+			  global $wp_admin_bar;
+
+			  /* Remove their stuff */
+			  $wp_admin_bar->remove_menu('wp-logo');
+		}
+		if(get_option('boilerplate_hide_admin_bar_logo',false)==true){
+			add_action('wp_before_admin_bar_render', 'annointed_admin_bar_remove', 0);
+		}
+		
 	//Add the plugin options page
 		add_action('admin_menu', 'boilerplate_barebones_menu');
 		function boilerplate_barebones_menu() {
-			add_theme_page('Theme options', 'Theme options', 'manage_options', WP_THEME_SLUG, 'boilerplate_theme_options');
+			add_theme_page('Theme options', 'Theme options', 'manage_options', 'building-blocks', 'boilerplate_theme_options');
 		}
 		function boilerplate_theme_options() {
 			//Display the theme options
 				include('theme-options.php');
 		}
 
-	
+	//Hide the description and URL fields for attachments, as well as "Insert into post"
+		function hide_attachment_fields($form_fields, $post) {
+			if(!current_user_can('administrator')){
+				if(get_option('boilerplate_hide_attachment_caption',false)==true){
+					$form_fields['post_excerpt']['value'] = '';
+					$form_fields['post_excerpt']['input'] = 'hidden';
+				}
+				if(get_option('boilerplate_hide_attachment_description',false)==true){
+					$form_fields['post_content']['value'] = '';
+					$form_fields['post_content']['input'] = 'hidden';
+				}
+				if(get_option('boilerplate_hide_attachment_link',false)==true){
+					$form_fields['url']['value'] = '';
+					$form_fields['url']['input'] = 'hidden';
+				}
+			}
+			return $form_fields;
+		}
+		add_filter("attachment_fields_to_edit", "hide_attachment_fields", null, 2);
+		
+	//Hide file upload tabs
+		function remove_media_library_tab($tabs) {
+			if (!current_user_can('administrator') && get_option('boilerplate_hide_attachment_library',false)==true && isset($_REQUEST['post_id'])) {
+				unset($tabs['library']);
+			}
+			return $tabs;
+		}
+		add_filter('media_upload_tabs', 'remove_media_library_tab');
+
 //LOCALIZATION
 	
 	//Enable localization
-		load_theme_textdomain(WP_THEME_SLUG,get_template_directory() . '/languages');
+		load_theme_textdomain('building-blocks',get_template_directory() . '/languages');
 		
 		
 //UTILITY

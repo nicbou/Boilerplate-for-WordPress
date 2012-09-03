@@ -3,7 +3,7 @@
 <head profile="http://gmpg.org/xfn/11">
 	<meta http-equiv="content-type" content="<?php bloginfo('html_type')?>;charset=<?php bloginfo('charset'); ?>"/>
 	
-	<title><?php make_title()?></title>
+	<title><?php make_title()//Uses wp_title by default?></title>
 	<meta name="description" content="<?php make_description()?>"/>
 	<meta name="keywords" content="<?php if (is_single() && get_tags()) { foreach(get_tags() as $tag){ echo $tag->name . ', '; }}?>"/>
 	
@@ -13,15 +13,14 @@
 	
 	<link rel="stylesheet" href="<?php echo get_stylesheet_uri() ?>" type="text/css" media="screen"/>
 	<link rel="icon" type="image/x-icon" href="<?php echo get_stylesheet_directory_uri() ?>/images/favicon.ico"/>
-	
-	<?php if ( is_singular() && get_option( 'thread_comments' ) ) wp_enqueue_script( 'comment-reply' ); ?>
+
 	<?php wp_head()?>
 </head>
 <body <?php body_class()?>>
 	<div id="wrapper">
 		<div id="header">
 			<div id="banner">
-				<a href="<?php echo site_url()?>" title="<?php bloginfo('name')?>"><?php bloginfo('name')?></a>	
+				<a id="logo" href="<?php echo site_url()?>" title="<?php bloginfo('name')?>"><?php bloginfo('name')?></a>	
 			</div>
 			<?php $args = array(
 				'theme_location'  => 'main-menu',
