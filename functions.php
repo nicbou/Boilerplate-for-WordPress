@@ -120,6 +120,10 @@
 			return $init;
 		}
 		add_filter('tiny_mce_before_init', 'change_mce_options');
+
+	//Remove the generator meta tag for security purposes
+		function remove_generator_tag() { return ''; }  
+		add_filter( 'the_generator', 'remove_generator_tag' );
 //ADMIN
 
 	//Load the site's CSS in the editor
