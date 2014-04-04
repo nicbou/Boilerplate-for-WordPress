@@ -1,4 +1,8 @@
-Boilerplate is a barebones WordPress theme intended to speed up WordPress theme development. It includes all the features you should expect from WordPress themes along with a ton of useful optional features:
+#Boilerplate for WordPress
+
+Boilerplate is a barebones WordPress theme intended to speed up WordPress theme development. Unlike Bones and other WordPress
+boilerplates, it is not barebones and is principally geared towards taking the pain out of building standard WordPress sites.
+It includes all the features you should expect from WordPress themes along with a ton of useful optional features:
 
 * Empty CSS selectors. Just add your styles.
 * Widget and custom menu support
@@ -12,7 +16,7 @@ Boilerplate is a barebones WordPress theme intended to speed up WordPress theme 
 * Minor annoyance fixes (remove useless scripts)
 * Hooks and filters
 
-It is also updated on WordPress.org under the name "Building Blocks".
+An older version is available on WordPress.org under the name "Building Blocks".
 
 The theme provides an empty stylesheet with all the selectors ready to be filled in. All you have to do is enter your CSS, and you are good to go!
 
