@@ -1,4 +1,4 @@
-#Boilerplate for WordPress
+# Boilerplate for WordPress
 
 Boilerplate is a barebones WordPress theme intended to speed up WordPress theme development. Unlike Bones and other WordPress
 boilerplates, it is not barebones and is principally geared towards taking the pain out of building standard WordPress sites.
